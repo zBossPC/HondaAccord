@@ -41,9 +41,20 @@ function isNewer(latest: string, current: string): boolean {
   return false;
 }
 
-function pickWindowsInstaller(
-  assets: { name: string; browser_download_url: string }[],
-): string | null {
+function pickInstaller(assets: { name: string; browser_download_url: string }[]): string | null {
+  const platform = navigator.platform.toLowerCase();
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (platform.includes("mac")) {
+    return assets.find((a) => a.name.endsWith(".dmg"))?.browser_download_url ?? null;
+  }
+
+  if (platform.includes("linux") || ua.includes("linux")) {
+    const appImage = assets.find((a) => a.name.endsWith(".AppImage"));
+    const deb = assets.find((a) => a.name.endsWith(".deb"));
+    return appImage?.browser_download_url ?? deb?.browser_download_url ?? null;
+  }
+
   const setup = assets.find((a) => a.name.endsWith("-setup.exe"));
   if (setup) return setup.browser_download_url;
   const portable = assets.find(
@@ -69,7 +80,7 @@ export async function checkForAppUpdate(): Promise<UpdateResult> {
     const data = await res.json();
     const tag = (data.tag_name as string)?.replace(/^v/i, "") ?? "";
     const assets = (data.assets ?? []) as { name: string; browser_download_url: string }[];
-    const downloadUrl = pickWindowsInstaller(assets);
+    const downloadUrl = pickInstaller(assets);
 
     if (!isNewer(tag, APP_VERSION)) {
       return { available: false, reason: `You're on the latest version (v${APP_VERSION}).` };
@@ -78,7 +89,7 @@ export async function checkForAppUpdate(): Promise<UpdateResult> {
     if (!downloadUrl) {
       return {
         available: false,
-        reason: `v${tag} is available but no Windows installer was found on GitHub.`,
+        reason: `v${tag} is available but no installer was found for this platform.`,
       };
     }
 

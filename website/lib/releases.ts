@@ -43,6 +43,20 @@ export function pickWindowsAssets(assets: ReleaseAsset[]) {
   return { setup, portable, exe };
 }
 
+export function pickPlatformAssets(assets: ReleaseAsset[]) {
+  const windows = pickWindowsAssets(assets);
+  const mac = assets.find((a) => a.name.endsWith(".dmg"));
+  const appImage = assets.find((a) => a.name.endsWith(".AppImage"));
+  const deb = assets.find((a) => a.name.endsWith(".deb"));
+
+  return {
+    ...windows,
+    mac,
+    appImage,
+    deb,
+  };
+}
+
 export function formatBytes(bytes: number): string {
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
