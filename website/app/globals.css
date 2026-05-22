@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #111214;
+  --color-bg-secondary: #1a1b1f;
+  --color-bg-elevated: #2b2d31;
+  --color-text-primary: #f2f3f5;
+  --color-text-muted: #949ba4;
+  --color-brand: #e10600;
+  --color-brand-hover: #ff1a1a;
+  --color-brand-muted: rgba(225, 6, 0, 0.12);
+  --color-border: rgba(255, 255, 255, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(225, 6, 0, 0.35);
+}
+
+.gradient-glow {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(225, 6, 0, 0.25), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(225, 6, 0, 0.08), transparent);
+}
+
+.card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--color-brand);
+  color: white;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: var(--color-brand-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background: #35373c;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--color-brand-muted);
+  color: var(--color-brand);
+  font-size: 1.25rem;
+}
+
+.mock-window {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.mock-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 14px;
+  background: #0d0e10;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mock-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

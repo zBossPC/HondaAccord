@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #111214;
+  --color-bg-secondary: #1a1b1f;
+  --color-bg-tertiary: #222327;
+  --color-bg-elevated: #2b2d31;
+  --color-bg-hover: #35373c;
+  --color-bg-accent: #3f4147;
+  --color-bg-input: #1e1f23;
+  --color-text-primary: #f2f3f5;
+  --color-text-muted: #949ba4;
+  --color-text-faint: #6d7178;
+  --color-brand: #e10600;
+  --color-brand-hover: #ff1a1a;
+  --color-brand-muted: rgba(225, 6, 0, 0.15);
+  --color-online: #23a559;
+  --color-idle: #f0b232;
+  --color-dnd: #f23f43;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-strong: rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Safety: constrain logos even if utility classes fail */
+.app-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.app-logo-sm {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+}
+
+.app-shell > * {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* Auth page — plain CSS so login always renders correctly */
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background: var(--color-bg-primary);
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-header h1 {
+  margin: 16px 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.auth-header p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.auth-panel {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--color-bg-input);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.auth-tab.active {
+  background: var(--color-brand);
+  color: white;
+}
+
+.auth-field {
+  margin-bottom: 14px;
+}
+
+.auth-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-input);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.auth-field input:focus {
+  border-color: var(--color-brand);
+}
+
+.auth-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  background: var(--color-brand);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.auth-submit:hover:not(:disabled) {
+  background: var(--color-brand-hover);
+}
+
+.auth-submit:disabled {
+  opacity: 0.5;
+}
+
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 16px;
+  background: var(--color-bg-primary);
+  color: var(--color-text-muted);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0d0e10;
+  border-radius: 4px;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.prose p {
+  margin: 0;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(35, 165, 89, 0.4); }
+  50% { box-shadow: 0 0 0 4px rgba(35, 165, 89, 0); }
+}
+
+.speaking-ring {
+  animation: pulse-ring 1.5s ease-in-out infinite;
+}
