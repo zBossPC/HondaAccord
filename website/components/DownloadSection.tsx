@@ -18,7 +18,9 @@ function DownloadIcon() {
 
 export async function DownloadSection() {
   const release = await getLatestRelease();
-  const { msi, exe } = release ? pickWindowsAssets(release.assets) : { msi: undefined, exe: undefined };
+  const { setup, portable } = release
+    ? pickWindowsAssets(release.assets)
+    : { setup: undefined, portable: undefined };
   const releasesUrl = `${GITHUB_REPO}/releases`;
 
   return (
@@ -36,10 +38,11 @@ export async function DownloadSection() {
               Get HondaAccord
             </h2>
             <p className="mx-auto mb-10 max-w-lg text-center text-[var(--color-text-muted)]">
-              Free, open source, and ready for Windows. Pick an installer below — no account needed to download.
+              Free, open source, and ready for Windows. Use the setup build for updates, or grab
+              the portable exe if you want to run it directly.
             </p>
 
-            {release && (msi || exe) ? (
+            {release && (setup || portable) ? (
               <>
                 <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
                   <span className="version-badge">{release.tag}</span>
@@ -53,15 +56,15 @@ export async function DownloadSection() {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
-                  {msi && (
-                    <a href={msi.url} className="download-card download-card-primary">
+                  {setup && (
+                    <a href={setup.url} className="download-card download-card-primary">
                       <div className="download-card-icon">
                         <WindowsIcon />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="download-card-title">Windows Installer (.msi)</div>
+                        <div className="download-card-title">Windows Setup (.exe)</div>
                         <div className="download-card-sub">
-                          Recommended · Enterprise-friendly · {formatBytes(msi.size)}
+                          Recommended · Installs shortcuts · {formatBytes(setup.size)}
                         </div>
                       </div>
                       <span className="download-card-action">
@@ -71,15 +74,15 @@ export async function DownloadSection() {
                     </a>
                   )}
 
-                  {exe && (
-                    <a href={exe.url} className="download-card">
+                  {portable && (
+                    <a href={portable.url} className="download-card">
                       <div className="download-card-icon">
                         <WindowsIcon />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="download-card-title">Windows Setup (.exe)</div>
+                        <div className="download-card-title">Portable App (.exe)</div>
                         <div className="download-card-sub">
-                          NSIS installer · User-friendly · {formatBytes(exe.size)}
+                          No install · Run directly · {formatBytes(portable.size)}
                         </div>
                       </div>
                       <span className="download-card-action">

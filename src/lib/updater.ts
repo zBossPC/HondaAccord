@@ -44,12 +44,12 @@ function isNewer(latest: string, current: string): boolean {
 function pickWindowsInstaller(
   assets: { name: string; browser_download_url: string }[],
 ): string | null {
-  const msi = assets.find((a) => a.name.endsWith(".msi"));
-  if (msi) return msi.browser_download_url;
-  const exe = assets.find(
-    (a) => a.name.endsWith("-setup.exe") || a.name.endsWith(".exe"),
+  const setup = assets.find((a) => a.name.endsWith("-setup.exe"));
+  if (setup) return setup.browser_download_url;
+  const portable = assets.find(
+    (a) => a.name.toLowerCase().includes("portable") && a.name.endsWith(".exe"),
   );
-  return exe?.browser_download_url ?? null;
+  return portable?.browser_download_url ?? null;
 }
 
 export async function checkForAppUpdate(): Promise<UpdateResult> {

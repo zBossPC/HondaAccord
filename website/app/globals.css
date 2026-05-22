@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #040406;
-  --color-bg-secondary: #09090f;
-  --color-bg-elevated: #111118;
+  --color-bg-primary: #060607;
+  --color-bg-secondary: #111214;
+  --color-bg-elevated: #191a1f;
   --color-text-primary: #f6f6fa;
-  --color-text-muted: #8888a0;
-  --color-brand: #ff0033;
-  --color-brand-hover: #ff2952;
-  --color-brand-glow: rgba(255, 0, 51, 0.5);
-  --color-brand-muted: rgba(255, 0, 51, 0.1);
-  --color-cyan: #00d4ff;
-  --color-cyan-muted: rgba(0, 212, 255, 0.1);
+  --color-text-muted: #9ca3af;
+  --color-brand: #e10600;
+  --color-brand-hover: #ff1a1a;
+  --color-brand-glow: rgba(225, 6, 0, 0.5);
+  --color-brand-muted: rgba(225, 6, 0, 0.12);
+  --color-cyan: #23d3ee;
+  --color-cyan-muted: rgba(35, 211, 238, 0.1);
   --color-border: rgba(255, 255, 255, 0.07);
   --color-border-glow: rgba(255, 0, 51, 0.3);
 }
@@ -22,7 +22,9 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--color-bg-primary);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(225, 6, 0, 0.14), transparent 60%),
+    var(--color-bg-primary);
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -42,8 +44,8 @@ body {
   background-image:
     linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, black 10%, transparent 80%);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 10%, black 10%, transparent 78%);
 }
 
 .bg-glow-red {
@@ -53,7 +55,7 @@ body {
   transform: translateX(-50%);
   width: 1000px;
   height: 700px;
-  background: radial-gradient(ellipse, rgba(255,0,51,0.14) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(225,6,0,0.18) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -64,7 +66,7 @@ body {
   right: -5%;
   width: 700px;
   height: 600px;
-  background: radial-gradient(ellipse, rgba(0,212,255,0.06) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(35,211,238,0.07) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -82,14 +84,14 @@ body {
 
 /* ── Typography ── */
 .gradient-text {
-  background: linear-gradient(135deg, #fff 20%, #ff0033 60%, #ff6680 100%);
+  background: linear-gradient(135deg, #fff 12%, #ff3a3a 48%, #e10600 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-text-cyan {
-  background: linear-gradient(135deg, #00d4ff 0%, #ffffff 80%);
+  background: linear-gradient(135deg, #23d3ee 0%, #ffffff 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -98,7 +100,7 @@ body {
 .hero-title {
   margin-bottom: 1.5rem;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 700;
   line-height: 1.04;
   letter-spacing: -0.03em;
@@ -109,7 +111,41 @@ body {
   max-width: 28rem;
   font-size: 1.125rem;
   line-height: 1.7;
+  color: color-mix(in oklab, var(--color-text-muted) 88%, white);
+}
+
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hero-pills span {
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.78);
+  background: rgba(255,255,255,0.045);
+  border: 1px solid var(--color-border);
+}
+
+.release-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
   color: var(--color-text-muted);
+  background: rgba(255,255,255,0.035);
+  border: 1px solid var(--color-border);
+}
+
+.release-strip strong {
+  color: white;
+  font-weight: 700;
 }
 
 .section-title {
@@ -136,7 +172,7 @@ body {
   top: 0;
   z-index: 50;
   border-bottom: 1px solid var(--color-border);
-  background: rgba(4, 4, 6, 0.88);
+  background: rgba(6, 6, 7, 0.76);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
@@ -231,16 +267,16 @@ body {
   border-radius: 12px;
   font-weight: 600;
   font-size: 0.925rem;
-  background: linear-gradient(135deg, #ff0033 0%, #cc0028 100%);
+  background: linear-gradient(135deg, #ff2a2a 0%, #e10600 48%, #990000 100%);
   color: white;
   text-decoration: none;
   border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 0 28px rgba(255,0,51,0.3), inset 0 1px 0 rgba(255,255,255,0.12);
+  box-shadow: 0 0 28px rgba(225,6,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12);
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0 44px rgba(255,0,51,0.5), inset 0 1px 0 rgba(255,255,255,0.18);
+  box-shadow: 0 0 44px rgba(225,6,0,0.5), inset 0 1px 0 rgba(255,255,255,0.18);
   transform: translateY(-2px);
 }
 
@@ -278,9 +314,9 @@ body {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: var(--color-brand-muted);
-  border: 1px solid rgba(255,0,51,0.22);
-  color: #ff6680;
+  background: rgba(225, 6, 0, 0.12);
+  border: 1px solid rgba(225,6,0,0.28);
+  color: #ff8a8a;
 }
 
 .badge-dot {
@@ -322,6 +358,14 @@ body {
   overflow: hidden;
 }
 
+.hero-section::after {
+  content: "";
+  position: absolute;
+  inset: auto 8% 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(225,6,0,0.45), rgba(35,211,238,0.22), transparent);
+}
+
 .hero-mockup-wrap {
   position: relative;
   display: flex;
@@ -357,7 +401,7 @@ body {
   font-weight: 700;
   line-height: 1;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #fff, #ff0033);
+  background: linear-gradient(135deg, #fff, #ff3a3a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -372,8 +416,11 @@ body {
 .feature-card {
   padding: 1.75rem;
   border-radius: 20px;
-  background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  background:
+    linear-gradient(160deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.015) 100%),
+    rgba(0,0,0,0.12);
   border: 1px solid var(--color-border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
   transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 
@@ -428,8 +475,11 @@ body {
   padding: 3rem 2rem;
   border-radius: 24px;
   border: 1px solid var(--color-border);
-  background: rgba(255,255,255,0.02);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0.015)),
+    rgba(0,0,0,0.18);
   overflow: hidden;
+  box-shadow: 0 28px 90px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
 @media (min-width: 768px) {
@@ -451,7 +501,7 @@ body {
   border-radius: 16px;
   text-decoration: none;
   color: inherit;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.04);
   border: 1px solid var(--color-border);
   transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
@@ -464,8 +514,8 @@ body {
 }
 
 .download-card-primary {
-  border-color: rgba(255,0,51,0.3);
-  background: rgba(255,0,51,0.06);
+  border-color: rgba(225,6,0,0.35);
+  background: linear-gradient(135deg, rgba(225,6,0,0.12), rgba(225,6,0,0.035));
 }
 
 .download-card-primary:hover {
@@ -558,8 +608,9 @@ body {
 .step-card {
   padding: 2rem;
   border-radius: 20px;
-  background: rgba(255,255,255,0.02);
+  background: linear-gradient(145deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
   border: 1px solid var(--color-border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 .step-num {
@@ -589,8 +640,15 @@ body {
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 0 0 1px rgba(255,0,51,0.08), 0 0 80px rgba(255,0,51,0.12), 0 40px 100px rgba(0,0,0,0.55);
+  box-shadow: 0 0 0 1px rgba(225,6,0,0.08), 0 0 80px rgba(225,6,0,0.14), 0 40px 100px rgba(0,0,0,0.6);
   background: #08080d;
+  position: relative;
+}
+
+.mock-glowline {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(225,6,0,0.9), rgba(35,211,238,0.55), transparent);
+  box-shadow: 0 0 24px rgba(225,6,0,0.6);
 }
 
 .mock-titlebar {
@@ -676,7 +734,7 @@ body {
 .site-footer {
   border-top: 1px solid var(--color-border);
   padding: 2.5rem 0;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.32);
 }
 
 .footer-link {

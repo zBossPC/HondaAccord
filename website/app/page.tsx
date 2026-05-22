@@ -6,37 +6,37 @@ export const revalidate = 60;
 
 const features = [
   {
-    icon: "◈",
+    icon: "◆",
     title: "Private Spaces",
-    description: "Invite-only groups with text and voice channels. Your crew, your rules.",
+    description: "Invite-only rooms for your crew with text, voice, and clean space settings.",
     accent: "red",
   },
   {
-    icon: "◎",
+    icon: "●",
     title: "Friends & DMs",
-    description: "Add by username, accept requests, jump into 1:1 messages instantly.",
+    description: "Add people by username, accept requests, and jump straight into private DMs.",
     accent: "cyan",
   },
   {
-    icon: "⬡",
-    title: "Voice Channels",
-    description: "Low-latency voice powered by LiveKit WebRTC. Join and talk in one click.",
+    icon: "◉",
+    title: "Persistent Voice",
+    description: "Stay connected while you move around the app, with native-style controls.",
     accent: "cyan",
   },
   {
-    icon: "▣",
-    title: "Screen Sharing",
-    description: "Share your screen at up to 4K/60. Gaming, collab, or presentations.",
+    icon: "▰",
+    title: "Screen Share",
+    description: "Share your screen from a dedicated stage built for desktop sessions.",
     accent: "red",
   },
   {
-    icon: "⚡",
+    icon: "✦",
     title: "Native Performance",
-    description: "Tauri 2 — fast startup, low RAM. Windows, macOS, and Linux.",
+    description: "Tauri desktop shell, low overhead, and a focused Windows-first experience.",
     accent: "red",
   },
   {
-    icon: "⬢",
+    icon: "◇",
     title: "Realtime Sync",
     description: "Messages, presence, and voice state synced instantly via Supabase.",
     accent: "cyan",
@@ -56,6 +56,7 @@ function Nav() {
 
         <nav className="nav-links" aria-label="Main">
           <a href="#features" className="nav-link">Features</a>
+          <a href="#download" className="nav-link">Releases</a>
           <a
             href={GITHUB_REPO}
             target="_blank"
@@ -67,7 +68,7 @@ function Nav() {
         </nav>
 
         <a href="#download" className="nav-cta btn-primary">
-          Download
+          Get App
         </a>
       </div>
     </header>
@@ -77,6 +78,7 @@ function Nav() {
 function HeroMockup() {
   return (
     <div className="mock-shell float-anim w-full max-w-lg">
+      <div className="mock-glowline" />
       <div className="mock-titlebar">
         <span className="mock-dot bg-[#ff5f57]" />
         <span className="mock-dot bg-[#febc2e]" />
@@ -127,9 +129,11 @@ function HeroMockup() {
 
 export default async function HomePage() {
   const release = await getLatestRelease();
-  const { msi, exe } = release ? pickWindowsAssets(release.assets) : { msi: undefined, exe: undefined };
-  const primaryDownload = msi?.url ?? exe?.url ?? `${GITHUB_REPO}/releases`;
-  const downloadLabel = msi || exe ? `Download ${release?.tag ?? ""}`.trim() : "View Releases";
+  const { setup, portable } = release
+    ? pickWindowsAssets(release.assets)
+    : { setup: undefined, portable: undefined };
+  const primaryDownload = setup?.url ?? portable?.url ?? `${GITHUB_REPO}/releases`;
+  const downloadLabel = setup || portable ? `Download ${release?.tag ?? ""}`.trim() : "View Releases";
 
   return (
     <>
@@ -147,17 +151,22 @@ export default async function HomePage() {
               <div>
                 <div className="badge mb-7">
                   <span className="badge-dot" />
-                  v{release?.tag?.replace(/^v/i, "") ?? "…"} · Open Source · Native Desktop
+                  v{release?.tag?.replace(/^v/i, "") ?? "..."} · Windows desktop · Open source
                 </div>
                 <h1 className="hero-title">
-                  Private chat,
+                  Desktop chat
                   <br />
-                  <span className="gradient-text">reimagined.</span>
+                  <span className="gradient-text">for your crew.</span>
                 </h1>
                 <p className="hero-sub">
-                  A fast, native app for your friend group — text, voice, screen share, and
-                  private Spaces. No algorithms. No public servers. Just your people.
+                  HondaAccord is a fast private chat app for friend groups: spaces, DMs,
+                  persistent voice, screen share, and a desktop-first interface.
                 </p>
+                <div className="hero-pills mb-6">
+                  <span>Persistent voice</span>
+                  <span>Portable exe</span>
+                  <span>Private spaces</span>
+                </div>
                 <div className="flex flex-wrap gap-3">
                   <a href={primaryDownload} className="btn-primary btn-lg">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -169,11 +178,11 @@ export default async function HomePage() {
                     View on GitHub
                   </a>
                 </div>
-                {release && (
-                  <p className="mt-5 text-xs text-[var(--color-text-muted)]">
-                    Latest release <span className="text-white/70">{release.tag}</span> · Windows x64
-                  </p>
-                )}
+                <div className="release-strip">
+                  <span>Latest</span>
+                  <strong>{release?.tag ?? "Coming soon"}</strong>
+                  <span>Windows x64</span>
+                </div>
               </div>
               <div className="hero-mockup-wrap">
                 <HeroMockup />
@@ -184,10 +193,10 @@ export default async function HomePage() {
           <section className="stats-section">
             <div className="mx-auto grid max-w-6xl grid-cols-2 md:grid-cols-4">
               {[
-                { value: "<50MB", label: "RAM usage" },
-                { value: "4K/60", label: "Screen share" },
-                { value: "0", label: "Public servers" },
-                { value: "Free", label: "Always" },
+                { value: "Tauri", label: "Native shell" },
+                { value: "Voice", label: "Stays connected" },
+                { value: "Private", label: "Invite spaces" },
+                { value: "Free", label: "Open source" },
               ].map((s) => (
                 <div key={s.label} className="stat-cell">
                   <div className="stat-value">{s.value}</div>
@@ -202,9 +211,9 @@ export default async function HomePage() {
               <div className="mb-16 text-center">
                 <p className="section-label">Features</p>
                 <h2 className="section-title">
-                  Everything you need.
+                  Built like an app.
                   <br />
-                  <span className="gradient-text-cyan">Nothing you don&apos;t.</span>
+                  <span className="gradient-text-cyan">Not a website reskin.</span>
                 </h2>
               </div>
               <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

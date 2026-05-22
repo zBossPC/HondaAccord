@@ -37,9 +37,10 @@ export async function getLatestRelease(): Promise<ReleaseInfo | null> {
 }
 
 export function pickWindowsAssets(assets: ReleaseAsset[]) {
-  const msi = assets.find((a) => a.name.endsWith(".msi"));
-  const exe = assets.find((a) => a.name.endsWith("-setup.exe") || a.name.endsWith(".exe"));
-  return { msi, exe };
+  const setup = assets.find((a) => a.name.endsWith("-setup.exe"));
+  const portable = assets.find((a) => a.name.toLowerCase().includes("portable") && a.name.endsWith(".exe"));
+  const exe = setup ?? assets.find((a) => a.name.endsWith(".exe"));
+  return { setup, portable, exe };
 }
 
 export function formatBytes(bytes: number): string {
