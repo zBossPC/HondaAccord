@@ -19,7 +19,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.error) {
       return (
         <div className="crash-screen">
-          <img src="/icon.png" alt="" className="app-logo" />
+          <img src="icon.png" alt="" className="app-logo" />
           <h1>Something went wrong</h1>
           <p className="crash-message">{this.state.error.message}</p>
           <button

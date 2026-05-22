@@ -18,7 +18,7 @@ export function WelcomePane({ spaceName }: { spaceName?: string }) {
   return (
     <div className="welcome-pane">
       <div className="welcome-hero">
-        <img src="/icon.png" alt="" className="app-logo welcome-logo" />
+        <img src="icon.png" alt="" className="app-logo welcome-logo" />
         <div className="welcome-badge">
           <Sparkles size={14} />
           Ready when you are

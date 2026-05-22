@@ -54,7 +54,7 @@ export function SpaceList() {
               : "bg-[var(--color-bg-elevated)] text-[var(--color-text-muted)] hover:bg-[var(--color-brand)] hover:text-white"
           }`}
         >
-          <img src="/icon.png" alt="Home" className="app-logo-sm" />
+          <img src="icon.png" alt="Home" className="app-logo-sm" />
         </button>
 
         <button

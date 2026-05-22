@@ -30,7 +30,7 @@ export function AuthPage() {
     <div className="auth-page">
       <div className="auth-card animate-fade-in">
         <div className="auth-header">
-          <img src="/icon.png" alt="HondaAccord" className="app-logo" style={{ margin: "0 auto" }} />
+          <img src="icon.png" alt="HondaAccord" className="app-logo" style={{ margin: "0 auto" }} />
           <h1>HondaAccord</h1>
           <p>Chat with friends. Create Spaces. Talk in voice.</p>
         </div>

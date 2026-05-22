@@ -40,7 +40,7 @@ function App() {
     return (
       <div className="loading-screen">
         <div className="loading-logo-wrap">
-          <img src="/icon.png" alt="" className="app-logo" />
+          <img src="icon.png" alt="" className="app-logo" />
           <div className="loading-ring" aria-hidden />
         </div>
         <p className="loading-title">HondaAccord</p>
@@ -52,7 +52,7 @@ function App() {
   if (bootError && !profile) {
     return (
       <div className="crash-screen">
-        <img src="/icon.png" alt="" className="app-logo" />
+        <img src="icon.png" alt="" className="app-logo" />
         <h1>Connection issue</h1>
         <p className="crash-message">{bootError}</p>
         {!isSupabaseConfigured && (
