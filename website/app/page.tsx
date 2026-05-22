@@ -2,6 +2,8 @@ import Image from "next/image";
 import { DownloadSection } from "@/components/DownloadSection";
 import { GITHUB_REPO, getLatestRelease, pickWindowsAssets } from "@/lib/releases";
 
+export const revalidate = 60;
+
 const features = [
   {
     icon: "◈",
@@ -145,7 +147,7 @@ export default async function HomePage() {
               <div>
                 <div className="badge mb-7">
                   <span className="badge-dot" />
-                  v{release?.tag?.replace(/^v/i, "") ?? "0.2"} · Open Source · Native Desktop
+                  v{release?.tag?.replace(/^v/i, "") ?? "…"} · Open Source · Native Desktop
                 </div>
                 <h1 className="hero-title">
                   Private chat,

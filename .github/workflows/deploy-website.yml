@@ -6,6 +6,11 @@ on:
     paths:
       - "website/**"
       - ".github/workflows/deploy-website.yml"
+  release:
+    types: [published]
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
   workflow_dispatch:
 
 env:
@@ -15,6 +20,11 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'push' ||
+      github.event_name == 'release' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
 
     steps:
       - uses: actions/checkout@v4
@@ -45,3 +55,12 @@ jobs:
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deployment summary
+        run: |
+          echo "Website redeployed to https://hondaaccord.lol"
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "Triggered by release: ${{ github.event.release.tag_name }}"
+          elif [ "${{ github.event_name }}" = "workflow_run" ]; then
+            echo "Triggered after Release workflow completed"
+          fi
