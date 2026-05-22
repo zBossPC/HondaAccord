@@ -1,23 +1,41 @@
-import { Hash, Volume2 } from "lucide-react";
+import { Hash, Settings, Volume2 } from "lucide-react";
 import { useAppStore } from "../../stores/appStore";
+import { useVoiceStore } from "../../stores/voiceStore";
 import type { Channel } from "../../types";
 
 interface ChannelListProps {
   channels: Channel[];
   spaceName: string;
   isDm?: boolean;
+  onOpenSpaceSettings?: () => void;
 }
 
-export function ChannelList({ channels, spaceName, isDm }: ChannelListProps) {
+export function ChannelList({
+  channels,
+  spaceName,
+  isDm,
+  onOpenSpaceSettings,
+}: ChannelListProps) {
   const { selectedChannel, selectChannel } = useAppStore();
+  const { connected, channelId: voiceChannelId } = useVoiceStore();
 
   const textChannels = channels.filter((c) => c.type === "text");
   const voiceChannels = channels.filter((c) => c.type === "voice");
 
   return (
     <div className="flex min-h-0 w-60 shrink-0 flex-1 flex-col border-r border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
-      <div className="flex h-12 items-center border-b border-[var(--color-border)] px-4 shadow-sm">
-        <h2 className="truncate font-semibold">{spaceName}</h2>
+      <div className="flex h-12 items-center gap-2 border-b border-[var(--color-border)] px-3 shadow-sm">
+        <h2 className="min-w-0 flex-1 truncate font-semibold">{spaceName}</h2>
+        {!isDm && onOpenSpaceSettings && (
+          <button
+            type="button"
+            onClick={onOpenSpaceSettings}
+            title="Space settings"
+            className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-bg-hover)] hover:text-white"
+          >
+            <Settings size={16} />
+          </button>
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto p-2 pt-3">
@@ -38,16 +56,17 @@ export function ChannelList({ channels, spaceName, isDm }: ChannelListProps) {
           </>
         )}
 
-        {isDm && textChannels.map((channel) => (
-          <ChannelButton
-            key={channel.id}
-            channel={channel}
-            selected={selectedChannel?.id === channel.id}
-            onSelect={() => selectChannel(channel)}
-            icon={<Hash size={18} className="shrink-0 opacity-60" />}
-            label="Messages"
-          />
-        ))}
+        {isDm &&
+          textChannels.map((channel) => (
+            <ChannelButton
+              key={channel.id}
+              channel={channel}
+              selected={selectedChannel?.id === channel.id}
+              onSelect={() => selectChannel(channel)}
+              icon={<Hash size={18} className="shrink-0 opacity-60" />}
+              label="Messages"
+            />
+          ))}
 
         {!isDm && voiceChannels.length > 0 && (
           <>
@@ -61,6 +80,7 @@ export function ChannelList({ channels, spaceName, isDm }: ChannelListProps) {
                 selected={selectedChannel?.id === channel.id}
                 onSelect={() => selectChannel(channel)}
                 icon={<Volume2 size={18} className="shrink-0 opacity-60" />}
+                inVoice={connected && voiceChannelId === channel.id}
               />
             ))}
           </>
@@ -82,12 +102,14 @@ function ChannelButton({
   onSelect,
   icon,
   label,
+  inVoice,
 }: {
   channel: Channel;
   selected: boolean;
   onSelect: () => void;
   icon: React.ReactNode;
   label?: string;
+  inVoice?: boolean;
 }) {
   return (
     <button
@@ -100,7 +122,8 @@ function ChannelButton({
       }`}
     >
       {icon}
-      <span className="truncate">{label ?? channel.name}</span>
+      <span className="truncate flex-1">{label ?? channel.name}</span>
+      {inVoice && <span className="voice-channel-dot" title="Connected" />}
     </button>
   );
 }

@@ -87,6 +87,18 @@ export function useSpaces() {
     return { space: space as Space, channels: ch };
   }
 
+  async function deleteSpace(spaceId: string) {
+    const { error } = await supabase.rpc("delete_space", { p_space_id: spaceId });
+    if (error) throw error;
+    await loadSpaces();
+  }
+
+  async function leaveSpace(spaceId: string) {
+    const { error } = await supabase.rpc("leave_space", { p_space_id: spaceId });
+    if (error) throw error;
+    await loadSpaces();
+  }
+
   return {
     spaces,
     dmSpaces,
@@ -96,6 +108,8 @@ export function useSpaces() {
     createSpace,
     inviteFriend,
     openDm,
+    deleteSpace,
+    leaveSpace,
     getSpaceWithChannels,
     reloadSpaces: loadSpaces,
   };

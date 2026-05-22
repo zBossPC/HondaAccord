@@ -41,24 +41,30 @@ const features = [
   },
 ];
 
-function Nav({ downloadHref }: { downloadHref: string }) {
+function Nav() {
   return (
     <header className="nav-bar">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#" className="flex items-center gap-3 no-underline group">
+      <div className="nav-inner">
+        <a href="#" className="nav-logo group">
           <div className="logo-wrap">
-            <Image src="/icon.png" alt="" width={36} height={36} className="rounded-[10px]" />
+            <Image src="/icon.png" alt="" width={32} height={32} className="rounded-[9px]" />
           </div>
           <span className="nav-brand">HondaAccord</span>
         </a>
-        <nav className="hidden items-center gap-1 md:flex">
+
+        <nav className="nav-links" aria-label="Main">
           <a href="#features" className="nav-link">Features</a>
-          <a href={downloadHref} className="nav-link">Download</a>
-          <a href={GITHUB_REPO} target="_blank" rel="noopener noreferrer" className="btn-ghost text-sm py-2 px-4 ml-3">
+          <a
+            href={GITHUB_REPO}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link"
+          >
             GitHub
           </a>
         </nav>
-        <a href={downloadHref} className="btn-primary text-sm py-2 px-4 md:hidden">
+
+        <a href="#download" className="nav-cta btn-primary">
           Download
         </a>
       </div>
@@ -131,7 +137,7 @@ export default async function HomePage() {
       <div className="bg-noise" aria-hidden />
 
       <div className="page-content min-h-screen">
-        <Nav downloadHref="#download" />
+        <Nav />
 
         <main>
           <section className="hero-section">
@@ -139,7 +145,7 @@ export default async function HomePage() {
               <div>
                 <div className="badge mb-7">
                   <span className="badge-dot" />
-                  v0.1 · Open Source · Native Desktop
+                  v{release?.tag?.replace(/^v/i, "") ?? "0.2"} · Open Source · Native Desktop
                 </div>
                 <h1 className="hero-title">
                   Private chat,
