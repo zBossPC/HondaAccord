@@ -5,17 +5,26 @@ on:
     branches: [main]
     paths:
       - "website/**"
+      - ".github/workflows/deploy-website.yml"
   workflow_dispatch:
+
+env:
+  NEXT_PUBLIC_GITHUB_URL: https://github.com/zBossPC/HondaAccord
+  NEXT_PUBLIC_SITE_URL: https://hondaaccord.lol
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 10
 
       - uses: actions/setup-node@v4
         with:
@@ -23,16 +32,14 @@ jobs:
           cache: pnpm
           cache-dependency-path: website/pnpm-lock.yaml
 
-      - name: Install website dependencies
-        working-directory: website
+      - name: Install dependencies
         run: pnpm install --ignore-workspace
 
       - name: Build website
-        working-directory: website
         run: pnpm build
         env:
-          NEXT_PUBLIC_GITHUB_URL: ${{ vars.NEXT_PUBLIC_GITHUB_URL }}
-          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_GITHUB_URL: ${{ vars.NEXT_PUBLIC_GITHUB_URL || env.NEXT_PUBLIC_GITHUB_URL }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || env.NEXT_PUBLIC_SITE_URL }}
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
@@ -40,5 +47,5 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: website
+          working-directory: ./website
           vercel-args: "--prod"

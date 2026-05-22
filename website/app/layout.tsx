@@ -1,25 +1,38 @@
 import type { Metadata } from "next";
+import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hondaaccord.app";
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hondaaccord.lol";
 
 export const metadata: Metadata = {
-  title: "HondaAccord — Fast, native chat for friends",
+  title: "HondaAccord — The future of private chat",
   description:
-    "A lightweight Discord-style desktop app for chatting with friends. Private Spaces, voice channels, screen sharing, and DMs — without public servers.",
+    "A fast, native desktop app for private group chat, voice, and screen sharing. Built for friend groups — not public servers.",
   metadataBase: new URL(siteUrl),
   openGraph: {
     title: "HondaAccord",
-    description:
-      "Fast, native chat for friends. Text, voice, video, and screen share in private Spaces.",
+    description: "Fast, native chat for friends. Voice, screen share, and private Spaces.",
     type: "website",
     siteName: "HondaAccord",
+    url: siteUrl,
     images: [{ url: "/icon.png", width: 512, height: 512, alt: "HondaAccord" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "HondaAccord",
-    description: "Fast, native chat for friends.",
+    description: "The future of private chat.",
     images: ["/icon.png"],
   },
   icons: {
@@ -34,8 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
+      <body style={{ fontFamily: "var(--font-body), system-ui, sans-serif" }}>{children}</body>
     </html>
   );
 }
