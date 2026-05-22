@@ -189,7 +189,7 @@ export async function DownloadSection() {
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {[
             { label: "Platforms", value: "Windows · macOS · Linux" },
-            { label: "Architecture", value: "x64" },
+            { label: "Architecture", value: "x64 · Apple Silicon" },
             { label: "License", value: "MIT · Free forever" },
           ].map((item) => (
             <div key={item.label} className="spec-chip">

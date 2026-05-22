@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>HondaAccord uses your microphone so you can talk in voice channels.</string>
+  <key>NSCameraUsageDescription</key>
+  <string>HondaAccord may use camera capture for future voice and video features.</string>
+  <key>NSScreenCaptureUsageDescription</key>
+  <string>HondaAccord uses screen capture when you choose to share your screen.</string>
+</dict>
+</plist>

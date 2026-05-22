@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Mic, MicOff, MonitorUp, PhoneOff, Users, Volume2 } from "lucide-react";
+import { MicOff, Users, Volume2 } from "lucide-react";
 import { useAuthStore } from "../../stores/authStore";
 import { useVoiceStore } from "../../stores/voiceStore";
 import { Avatar } from "../ui/Avatar";
@@ -18,19 +18,10 @@ export function VoicePanel({ channelId, channelName, spaceName, spaceId }: Voice
     connected,
     connecting,
     channelId: activeChannelId,
-    muted,
-    deafened,
-    screenSharing,
-    screenShareQuality,
-    setScreenShareQuality,
     liveParticipants,
     voicePresence,
     error,
     join,
-    leave,
-    toggleMute,
-    toggleDeafen,
-    toggleScreenShare,
     subscribePresence,
     refreshPresence,
   } = useVoiceStore();
@@ -154,65 +145,6 @@ export function VoicePanel({ channelId, channelName, spaceName, spaceId }: Voice
         )}
       </div>
 
-      {isThisChannel && (
-        <footer className="voice-panel-footer">
-          <div className="voice-footer-settings">
-            <label className="text-xs text-[var(--color-text-muted)]">Share quality</label>
-            <select
-              value={screenShareQuality}
-              onChange={(e) =>
-                setScreenShareQuality(e.target.value as "standard" | "high" | "ultra")
-              }
-              disabled={screenSharing}
-              className="native-select"
-            >
-              <option value="standard">1080p</option>
-              <option value="high">1440p 60</option>
-              <option value="ultra">4K 60</option>
-            </select>
-          </div>
-          <div className="voice-footer-controls">
-            <FooterControl active={muted} danger={muted} onClick={toggleMute} title="Mute">
-              {muted ? <MicOff size={20} /> : <Mic size={20} />}
-            </FooterControl>
-            <FooterControl active={deafened} danger={deafened} onClick={toggleDeafen} title="Deafen">
-              {deafened ? <Volume2 size={20} className="opacity-40" /> : <Volume2 size={20} />}
-            </FooterControl>
-            <FooterControl active={screenSharing} accent={screenSharing} onClick={toggleScreenShare} title="Screen share">
-              <MonitorUp size={20} />
-            </FooterControl>
-            <FooterControl danger onClick={leave} title="Disconnect">
-              <PhoneOff size={20} />
-            </FooterControl>
-          </div>
-        </footer>
-      )}
     </div>
-  );
-}
-
-function FooterControl({
-  children,
-  onClick,
-  title,
-  active,
-  danger,
-  accent,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  title: string;
-  active?: boolean;
-  danger?: boolean;
-  accent?: boolean;
-}) {
-  let cls = "native-voice-btn native-voice-btn-lg";
-  if (danger && active) cls += " native-voice-btn-danger";
-  if (accent && active) cls += " native-voice-btn-accent";
-
-  return (
-    <button type="button" onClick={onClick} title={title} className={cls}>
-      {children}
-    </button>
   );
 }

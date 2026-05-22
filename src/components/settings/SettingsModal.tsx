@@ -163,10 +163,10 @@ export function SettingsModal({ onClose }: SettingsModalProps) {
         </section>
 
         <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3">
-          <h3 className="mb-1 text-sm font-semibold text-white">Background mode</h3>
+          <h3 className="mb-1 text-sm font-semibold text-white">App window</h3>
           <p className="text-sm text-[var(--color-text-muted)]">
-            Closing the window hides HondaAccord to the system tray. Voice stays connected
-            while minimized — use the tray icon to restore or quit.
+            Closing the window now fully quits HondaAccord, which prevents old installed versions
+            from staying open in the tray after an update.
           </p>
         </section>
 
