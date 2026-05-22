@@ -1,6 +1,6 @@
 [package]
 name = "honda-accord"
-version = "0.2.0"
+version = "0.2.1"
 description = "HondaAccord — chat with friends"
 authors = ["you"]
 edition = "2021"

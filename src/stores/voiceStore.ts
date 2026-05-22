@@ -1,12 +1,7 @@
 import { create } from "zustand";
-import {
-  Room,
-  RoomEvent,
-  Track,
-  type RemoteParticipant,
-  type RemoteTrackPublication,
-} from "livekit-client";
-import { livekitUrl, supabase } from "../lib/supabase";
+import type { Room, RemoteParticipant, RemoteTrackPublication } from "livekit-client";
+import { loadLiveKit } from "../lib/livekit";
+import { supabase, livekitUrl } from "../lib/supabase";
 import type { VoicePresence } from "../types";
 
 export interface LiveParticipant {
@@ -33,7 +28,14 @@ interface VoiceState {
   liveParticipants: LiveParticipant[];
   voicePresence: VoicePresence[];
   error: string | null;
-  join: (channelId: string, channelName: string, spaceName: string, spaceId: string, profileId: string, displayName: string) => Promise<void>;
+  join: (
+    channelId: string,
+    channelName: string,
+    spaceName: string,
+    spaceId: string,
+    profileId: string,
+    displayName: string,
+  ) => Promise<void>;
   leave: () => Promise<void>;
   toggleMute: () => Promise<void>;
   toggleDeafen: () => Promise<void>;
@@ -61,7 +63,7 @@ function syncParticipants(set: (partial: Partial<VoiceState>) => void) {
 
     let videoTrack: MediaStreamTrack | null = null;
     p.videoTrackPublications.forEach((pub) => {
-      if (pub.track && pub.source === Track.Source.ScreenShare) {
+      if (pub.track && pub.source === "screen_share") {
         videoTrack = pub.track.mediaStreamTrack;
       }
     });
@@ -120,7 +122,12 @@ export const useVoiceStore = create<VoiceState>((set, get) => ({
       .channel(`voice-global:${channelId}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "voice_presence", filter: `channel_id=eq.${channelId}` },
+        {
+          event: "*",
+          schema: "public",
+          table: "voice_presence",
+          filter: `channel_id=eq.${channelId}`,
+        },
         () => void get().refreshPresence(),
       )
       .subscribe();
@@ -156,6 +163,7 @@ export const useVoiceStore = create<VoiceState>((set, get) => ({
       if (res.error) throw new Error(res.error.message);
       const { token } = res.data as { token: string };
 
+      const { Room, RoomEvent } = await loadLiveKit();
       const room = new Room();
       roomRef.current = room;
 
@@ -175,7 +183,7 @@ export const useVoiceStore = create<VoiceState>((set, get) => ({
           channelId: null,
           channelName: null,
           spaceName: null,
-  spaceId: null,
+          spaceId: null,
         });
       });
 
@@ -192,13 +200,15 @@ export const useVoiceStore = create<VoiceState>((set, get) => ({
       set({ connected: true, muted: false, deafened: false, connecting: false });
       syncParticipants(set);
     } catch (err) {
+      roomRef.current?.disconnect();
+      roomRef.current = null;
       set({
         connecting: false,
         error: err instanceof Error ? err.message : "Failed to join voice",
         channelId: null,
         channelName: null,
         spaceName: null,
-  spaceId: null,
+        spaceId: null,
       });
     }
   },
@@ -227,7 +237,7 @@ export const useVoiceStore = create<VoiceState>((set, get) => ({
       channelId: null,
       channelName: null,
       spaceName: null,
-  spaceId: null,
+      spaceId: null,
       muted: false,
       deafened: false,
       error: null,

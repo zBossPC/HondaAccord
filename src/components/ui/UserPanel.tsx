@@ -23,8 +23,9 @@ export function UserPanel({ onSignOut, onOpenSettings }: UserPanelProps) {
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold leading-tight">{name}</p>
-        <p className="truncate text-xs text-[var(--color-text-muted)]">
-          @{profile.username}
+        <p className="truncate text-xs text-[var(--color-text-muted)]">@{profile.username}</p>
+        <p className="truncate text-[10px] text-[var(--color-text-faint)]">
+          v{import.meta.env.VITE_APP_VERSION ?? "0.2.1"}
         </p>
       </div>
       <button

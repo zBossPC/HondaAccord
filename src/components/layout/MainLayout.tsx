@@ -36,7 +36,7 @@ export function MainLayout() {
   const isDm = selectedSpace?.type === "dm";
 
   return (
-    <div className="flex h-full min-h-0 w-full flex-1 overflow-hidden">
+    <div className="main-layout-root flex h-full min-h-0 w-full flex-1 overflow-hidden">
       <SpaceList />
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">

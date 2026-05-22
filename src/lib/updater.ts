@@ -1,7 +1,6 @@
-import pkg from "../../package.json";
+import { APP_VERSION } from "./version";
 
 const GITHUB_REPO = "https://github.com/zBossPC/HondaAccord";
-const CURRENT_VERSION = pkg.version;
 
 const TAURI =
   typeof window !== "undefined" &&
@@ -12,7 +11,7 @@ export function isDesktopApp(): boolean {
 }
 
 export function getAppVersion(): string {
-  return CURRENT_VERSION;
+  return APP_VERSION;
 }
 
 type UpdateResult =
@@ -72,8 +71,8 @@ export async function checkForAppUpdate(): Promise<UpdateResult> {
     const assets = (data.assets ?? []) as { name: string; browser_download_url: string }[];
     const downloadUrl = pickWindowsInstaller(assets);
 
-    if (!isNewer(tag, CURRENT_VERSION)) {
-      return { available: false, reason: `You're on the latest version (v${CURRENT_VERSION}).` };
+    if (!isNewer(tag, APP_VERSION)) {
+      return { available: false, reason: `You're on the latest version (v${APP_VERSION}).` };
     }
 
     if (!downloadUrl) {

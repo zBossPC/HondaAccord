@@ -40,9 +40,15 @@ export function useAuth() {
     let mounted = true;
 
     async function init() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user && mounted) {
-        await loadProfile(session.user.id);
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        if (session?.user && mounted) {
+          await loadProfile(session.user.id);
+        }
+      } catch (err) {
+        console.error("Auth init failed:", err);
       }
     }
 
@@ -68,12 +74,17 @@ export function useAuth() {
   }, [setProfile]);
 
   async function loadProfile(userId: string) {
-    const { data, error } = await withTimeout(
-      supabase.from("profiles").select("*").eq("id", userId).single(),
-      "Profile load",
-    );
-    if (error) throw error;
-    if (data) setProfile(data as Profile);
+    try {
+      const { data, error } = await withTimeout(
+        supabase.from("profiles").select("*").eq("id", userId).single(),
+        "Profile load",
+      );
+      if (error) throw error;
+      if (data) setProfile(data as Profile);
+    } catch (err) {
+      console.error("Profile load failed:", err);
+      setProfile(null);
+    }
   }
 
   async function signIn(username: string, password: string) {
